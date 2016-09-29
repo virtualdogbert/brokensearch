@@ -1,0 +1,173 @@
+buildscript {
+    ext {
+        grailsVersion = project.grailsVersion
+    }
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.6.9"
+        classpath "org.grails.plugins:hibernate:4.3.10.5"
+        classpath 'org.grails.plugins:database-migration:2.0.0.RC1'
+        //classpath "ru.d10xa:gradle-allure-plugin:0.5.2"
+    }
+}
+
+
+plugins {
+    id "io.spring.dependency-management" version "0.5.4.RELEASE"
+}
+
+version "1.5"
+
+apply plugin: "spring-boot"
+apply plugin: "war"
+apply plugin: "asset-pipeline"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "org.grails.grails-web"
+apply plugin: "org.grails.grails-gsp"
+//apply plugin: 'ru.d10xa.allure'
+
+//allure {
+//    spock = true
+//
+//    allureResultsDir = "$buildDir/allure-results"
+//    allureReportDir = "$buildDir/allure-report"
+//}
+
+
+ext {
+    grailsVersion = project.grailsVersion
+    gradleWrapperVersion = project.gradleWrapperVersion
+}
+
+assets {
+    minifyJs = false
+    minifyCss = false
+    excludes = ["**/*.less"] //Example Exclude GLOB pattern
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.grails:grails-bom:$grailsVersion"
+    }
+    applyMavenExclusions false
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
+    compile "org.grails.plugins:grails-spring-websocket:2.2.0"
+    compile "org.grails:grails-dependencies"
+    compile "org.grails:grails-web-boot"
+    compile "org.springframework.session:spring-session:1.2.0.RELEASE"
+
+    compile "org.grails.plugins:hibernate"
+    compile "org.grails.plugins:cache"
+    compile "org.hibernate:hibernate-ehcache"
+    compile "org.grails.plugins:scaffolding"
+
+    runtime "org.grails.plugins:database-migration:2.0.0.RC1"
+    runtime "org.grails.plugins:asset-pipeline:3.0.15"
+    runtime "mysql:mysql-connector-java:5.1.26"
+
+    compile "org.grails.plugins:mail:2.0.0.RC4"
+    assets "com.bertramlabs.plugins:less-asset-pipeline:2.6.9"
+    compile "org.grails.plugins:spring-security-core:3.0.0"
+    compile "org.grails.plugins:spring-security-ldap:3.0.1"
+    compile "org.grails.plugins:quartz:2.0.2"
+    compile "org.grails.plugins:browser-detection:3.0.0"
+
+    compile 'org.grails.plugins:spring-security-rest:2.0.0.M2'
+    compile 'org.grails.plugins:spring-security-rest-gorm:2.0.0.M2'
+    compile 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
+    compile 'org.grails.plugins:qrcode:0.9'
+
+
+    compile ('org.grails.plugins:elasticsearch:1.2.0')
+
+    compile "com.thoughtworks.xstream:xstream:1.4.8"
+    compile "org.apache.ant:ant:1.8.4"
+    compile "commons-io:commons-io:2.4"
+    compile 'commons-net:commons-net:3.4'
+    compile 'commons-pool:commons-pool:1.6'
+    compile 'commons-discovery:commons-discovery:0.5'
+
+    compile 'org.apache.axis:axis:1.4'
+    compile 'javax.xml.rpc:javax.xml.rpc-api:1.1.1'
+    compile 'org.eclipse.birt.runtime.3_7_1:javax.wsdl:1.5.1'
+
+    compile 'com.google.code.gson:gson:2.6.2'
+
+    compile 'com.lowagie:itext:2.1.7'
+    compile('net.sf.jasperreports:jasperreports:5.6.1') {
+        exclude module: 'antlr'
+        exclude module: 'commons-logging'
+        exclude module: 'ant'
+        exclude module: 'mondrian'
+        exclude module: 'commons-javaflow'
+        exclude module: 'barbecue'
+        exclude module: 'xml-apis-ext'
+        exclude module: 'xml-apis'
+        exclude module: 'xalan'
+        exclude module: 'groovy-all'
+        exclude module: 'hibernate'
+        exclude module: 'saaj-api'
+        exclude module: 'servlet-api'
+        exclude module: 'xercesImpl'
+        exclude module: 'xmlParserAPIs'
+        exclude module: 'spring-core'
+        exclude module: 'bsh'
+        exclude module: 'spring-beans'
+        exclude module: 'jaxen'
+        exclude module: 'barcode4j'
+        exclude module: 'batik-svg-dom'
+        exclude module: 'batik-xml'
+        exclude module: 'batik-awt-util'
+        exclude module: 'batik-dom'
+        exclude module: 'batik-css'
+        exclude module: 'batik-gvt'
+        exclude module: 'batik-script'
+        exclude module: 'batik-svggen'
+        exclude module: 'batik-util'
+        exclude module: 'batik-bridge'
+        exclude module: 'persistence-api'
+        exclude module: 'jdtcore'
+        exclude module: 'bcmail-jdk16'
+        exclude module: 'bcprov-jdk16'
+        exclude module: 'bctsp-jdk16'
+        exclude module: 'bcmail-jdk14'
+        exclude module: 'bcprov-jdk14'
+        exclude module: 'bctsp-jdk14'
+        exclude module: 'xmlbeans'
+        exclude module: 'olap4j'
+    }
+
+    compile 'org.glyptodon.guacamole:guacamole-common:0.9.9'
+    //compile 'javax.websocket:javax.websocket-api:1.1'
+
+    compile fileTree(dir: "lib", include: ["*.jar"])
+
+    testCompile "org.grails:grails-plugin-testing"
+    //testCompile 'org.codehaus.groovy:groovy-all:2.4.5'
+    //testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+
+    console "org.grails:grails-console"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleWrapperVersion
+}
+
