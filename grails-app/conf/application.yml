@@ -115,10 +115,52 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
-
+---
 elasticSearch:
+    date:
+        formats: ['yyyy-MM-dd''T''HH:mm:ss.SSS''Z''']
+    client.hosts:
+        - {host: localhost, port: 9300}
+    defaultExcludedProperties: [password]
+    disableAutoIndex: false
+    bulkIndexOnStartup: false
+    maxBulkRequest: 500
+    unmarshallComponents: true
+    searchableProperty:
+        name: searchable
+    migration:
+        strategy: alias
+        aliasReplacesIndex: true
+        disableAliasChange: false
+    index:
+        numberOfReplicas: 0
+        compound_format: true
+    includeTransients: true
+    datastoreImpl: hibernateDatastore
+environments:
+    development:
+        elasticSearch:
+            bulkIndexOnStartup: true
             client:
                 mode: local
                 transport.sniff: true
-            bulkIndexOnStartup: true
+                hosts:
+                    - {host: localhost, port: 9300}
+            index:
+                analysis:
+                    filter:
+                        replace_synonyms:
+                            type: synonym
+                            synonyms: [abc => xyz]
+                    analyzer:
+                        test_analyzer:
+                            tokenizer: standard
+                            filter: [lowercase]
+                        repl_analyzer:
+                            tokenizer: standard
+                            filter: [lowercase, replace_synonyms]
             datastoreImpl: hibernateDatastore
+    production:
+        elasticSearch:
+            client:
+                mode: node
