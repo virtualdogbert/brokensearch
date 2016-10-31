@@ -8,11 +8,10 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.6.9"
-        classpath "org.grails.plugins:hibernate:4.3.10.5"
-        classpath 'org.grails.plugins:database-migration:2.0.0.RC1'
-        //classpath "ru.d10xa:gradle-allure-plugin:0.5.2"
+		classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+		classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.6.9"
+		classpath "org.grails.plugins:hibernate:4.3.10.5"
+		classpath 'org.grails.plugins:database-migration:2.0.0.RC1'
     }
 }
 
@@ -30,15 +29,6 @@ apply plugin: "eclipse"
 apply plugin: "idea"
 apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.grails-gsp"
-//apply plugin: 'ru.d10xa.allure'
-
-//allure {
-//    spock = true
-//
-//    allureResultsDir = "$buildDir/allure-results"
-//    allureReportDir = "$buildDir/allure-report"
-//}
-
 
 ext {
     grailsVersion = project.grailsVersion
@@ -78,10 +68,7 @@ dependencies {
     compile "org.grails.plugins:cache"
     compile "org.hibernate:hibernate-ehcache"
     compile "org.grails.plugins:scaffolding"
-
-    runtime "org.grails.plugins:database-migration:2.0.0.RC1"
-    runtime "org.grails.plugins:asset-pipeline:3.0.15"
-    runtime "mysql:mysql-connector-java:5.1.26"
+	compile 'org.grails.plugins:elasticsearch:1.2.0'
 
     compile "org.grails.plugins:mail:2.0.0.RC4"
     assets "com.bertramlabs.plugins:less-asset-pipeline:2.6.9"
@@ -94,9 +81,6 @@ dependencies {
     compile 'org.grails.plugins:spring-security-rest-gorm:2.0.0.M2'
     compile 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
     compile 'org.grails.plugins:qrcode:0.9'
-
-
-    compile ('org.grails.plugins:elasticsearch:1.2.0')
 
     compile "com.thoughtworks.xstream:xstream:1.4.8"
     compile "org.apache.ant:ant:1.8.4"
@@ -156,13 +140,17 @@ dependencies {
     }
 
     compile 'org.glyptodon.guacamole:guacamole-common:0.9.9'
-    //compile 'javax.websocket:javax.websocket-api:1.1'
-
     compile fileTree(dir: "lib", include: ["*.jar"])
+	
+    runtime "org.grails.plugins:database-migration:2.0.0.RC1"
+    runtime "org.grails.plugins:asset-pipeline:3.0.15"
+    runtime "mysql:mysql-connector-java:5.1.26"
 
     testCompile "org.grails:grails-plugin-testing"
-    //testCompile 'org.codehaus.groovy:groovy-all:2.4.5'
-    //testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile "org.grails.plugins:geb"
+
+    // Note: It is recommended to update to a more robust driver (Chrome, Firefox etc.)
+    testRuntime 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0'
 
     console "org.grails:grails-console"
 }
