@@ -29,6 +29,7 @@ class TestController {
     }
 
     def delete() {
-        Part.get(1).delete(flush: true)
+        Part.last().delete(flush: true)
+        render "Done"
     }
 }
