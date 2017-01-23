@@ -1,5 +1,3 @@
-import org.gradle.internal.os.OperatingSystem
-
 buildscript {
     ext {
         grailsVersion = project.grailsVersion
@@ -85,19 +83,31 @@ dependencies {
     compile 'org.grails.plugins:hibernate4'
     compile 'org.hibernate:hibernate-core:4.3.10.Final'
     compile 'org.hibernate:hibernate-ehcache:4.3.10.Final'
-    compile ('org.grails.plugins:elasticsearch:1.2.0'){
+    compile('org.grails.plugins:elasticsearch:1.2.0') {
         exclude module: 'gson'
+        exclude module:'bcprov-jdk15on'
+        //exclude module:'guava'
+        exclude group: 'com.google.guava'
     }
 
-    compile 'org.springframework.session:spring-session:1.2.0.RELEASE'
+    compile 'org.bouncycastle:bcprov-jdk16:1.46'
+    //compile 'com.google.guava:guava:18.0'
+
     compile 'org.grails.plugins:mail:2.0.0.RC4'
 
-    compile 'org.grails.plugins:spring-security-core:3.1.1'
-    compile 'org.grails.plugins:spring-security-ldap:3.0.1'
+    compile ('org.grails.plugins:spring-security-core:3.1.1'){
+        exclude group: 'com.google.guava'
+    }
+
+    compile ('org.grails.plugins:spring-security-ldap:3.0.1'){
+            exclude group: 'com.google.guava'
+        }
     compile 'org.grails.plugins:quartz:2.0.2'
     compile 'org.grails.plugins:browser-detection:3.0.0'
 
-    compile 'org.grails.plugins:spring-security-rest:2.0.0.M2'
+    compile ('org.grails.plugins:spring-security-rest:2.0.0.M2'){
+        exclude group: 'com.google.guava'
+    }
     compile 'org.grails.plugins:spring-security-rest-gorm:2.0.0.M2'
     compile 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
     compile 'org.grails.plugins:qrcode:0.9'
@@ -165,7 +175,7 @@ dependencies {
 
     compile 'org.apache.tika:tika:1.9'
 
-    compile fileTree(dir: "lib", include: ["*.jar"])
+    //compile fileTree(dir: "lib", include: ["*.jar"])
 
     runtime 'com.h2database:h2'
     runtime 'org.grails.plugins:database-migration:2.0.0.RC1'
